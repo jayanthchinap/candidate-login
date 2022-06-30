@@ -12,12 +12,13 @@ class ViewItem extends Component {
     data: [],
   };
   getData = () => {
-    axios.get("http://localhost:4000/").then((response) => {
-      this.setState({ data: response?.data?.data });
+    axios.get("http://localhost:8000/users/").then((response) => {
+      this.setState({ data: response?.data });
     });
   };
 
   handleDelete = (id) => {
+    console.log(id);
     confirmAlert({
       title: "Confirm to Delete",
       message: "Are you sure to do this.",
@@ -25,9 +26,11 @@ class ViewItem extends Component {
         {
           label: "Yes",
           onClick: () =>
-            axios.delete(`http://localhost:4000/${id}`).then((response) => {
-              this.getData();
-            }),
+            axios
+              .delete(`http://localhost:8000/users/${id}`)
+              .then((response) => {
+                this.getData();
+              }),
         },
         {
           label: "No",
@@ -73,7 +76,6 @@ class ViewItem extends Component {
 
                 <td>
                   <div>
-                    {i.available}{" "}
                     <RiDeleteBin7Fill
                       className="mx-5"
                       onClick={() => this.handleDelete(i.id)}
